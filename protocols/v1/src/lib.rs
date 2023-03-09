@@ -131,7 +131,7 @@ pub trait IsServer<'a> {
             }
             methods::Client2Server::Subscribe(subscribe) => {
                 let subscriptions = self.handle_subscribe(&subscribe);
-                let extra_n1 = self.set_extranonce1(None);
+                let extra_n1 = self.set_extranonce1(subscribe.extranonce1.clone());
                 let extra_n2_size = self.set_extranonce2_size(None);
                 Ok(Some(subscribe.respond(
                     subscriptions,
