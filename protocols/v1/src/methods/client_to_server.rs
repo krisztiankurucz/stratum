@@ -489,8 +489,6 @@ impl ConfigureExtension {
                         .unwrap()
                         .try_into()?,
                 )
-            } else if version_rolling_mask.is_some() {
-                return Err(ParsingMethodError::Todo);
             } else {
                 None
             };

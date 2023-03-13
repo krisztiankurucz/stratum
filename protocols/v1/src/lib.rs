@@ -97,9 +97,11 @@ pub trait IsServer<'a> {
             }
             methods::Client2Server::Configure(configure) => {
                 debug!("{:?}", configure);
-                self.set_version_rolling_mask(configure.version_rolling_mask());
-                self.set_version_rolling_min_bit(configure.version_rolling_min_bit_count());
                 let (version_rolling, min_diff) = self.handle_configure(&configure);
+                if let Some(vr) = &version_rolling {
+                    self.set_version_rolling_mask(Some(vr.version_rolling_mask.clone()));
+                    self.set_version_rolling_min_bit(Some(vr.version_rolling_min_bit_count.clone()));
+                }
                 Ok(Some(configure.respond(version_rolling, min_diff)))
             }
             methods::Client2Server::ExtranonceSubscribe(_) => {
